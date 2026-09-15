@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول والأمان | إدارة وتطوير أبو العز العمري</title>
+    <style>
+        :root {
+            --bg-color: #05070b;
+            --card-bg: #0f172a;
+            --card-border: #1e293b;
+            --accent-color: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --error-color: #ef4444;
+            --success-color: #22c55e;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        header {
+            background: rgba(15, 23, 42, 0.95);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--card-border);
+        }
+        .logo {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        .auth-container {
+            max-width: 450px;
+            width: 100%;
+            margin: 50px auto;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--card-border);
+        }
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding-bottom: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background: #020617;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus {
+            border-color: var(--accent-color);
+        }
+        .btn-submit {
+            width: 100%;
+            background: var(--accent-color);
+            color: #05070b;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+        .btn-submit:hover {
+            background: var(--accent-hover);
+        }
+        .msg {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 0.95rem;
+            padding: 10px;
+            border-radius: 6px;
+            display: none;
+        }
+        .msg.error {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error-color);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            display: block;
+        }
+        .msg.success {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--success-color);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            display: block;
+        }
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+            border-top: 1px solid var(--card-border);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">إدارة وتطوير أبو العز العمري</a>
+        <a href="index.html" style="color: var(--text-muted); text-decoration: none;">← العودة للرئيسية</a>
+    </header>
+
+    <div class="auth-container">
+        <div class="auth-tabs">
+            <button class="tab-btn active" id="loginTab" onclick="switchTab('login')">تسجيل الدخول</button>
+            <button class="tab-btn" id="registerTab" onclick="switchTab('register')">حساب جديد</button>
+        </div>
+
+        <!-- فورم تسجيل الدخول -->
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>البريد الإلكتروني أو اسم المستخدم</label>
+                <input type="text" id="loginUser" required placeholder="أدخل البريد أو اسم المستخدم">
+            </div>
+            <div class="form-group">
+                <label>كلمة المرور الآمنة</label>
+                <input type="password" id="loginPass" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="btn-submit">دخول إلى لوحة التحكم</button>
+            <div id="loginMsg" class="msg"></div>
+        </form>
+
+        <!-- فورم إنشاء حساب جديد -->
+        <form id="registerForm" style="display: none;" onsubmit="handleRegister(event)">
+            <div class="form-group">
+                <label>اسم المستخدم الكامل</label>
+                <input type="text" id="regName" required placeholder="اسمك أو اسم شركتك">
+            </div>
+            <div class="form-group">
+                <label>البريد الإلكتروني</label>
+                <input type="email" id="regEmail" required placeholder="name@example.com">
+            </div>
+            <div class="form-group">
+                <label>كلمة المرور (تأكيد أمان عالي)</label>
+                <input type="password" id="regPass" required placeholder="6 أحرف على الأقل">
+            </div>
+            <button type="submit" class="btn-submit">إنشاء الحساب وتفعيل الأمان</button>
+            <div id="regMsg" class="msg"></div>
+        </form>
+    </div>
+
+    <footer>
+        <p>نظام الحماية والأمان المتقدم © 2026 - أبو العز العمري</p>
+    </footer>
+
+    <script>
+        function switchTab(tab) {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const loginTab = document.getElementById('loginTab');
+            const registerTab = document.getElementById('registerTab');
+
+            if(tab === 'login') {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+                registerTab.classList.add('active');
+                loginTab.classList.remove('active');
+            }
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const pass = document.getElementById('regPass').value;
+            const msg = document.getElementById('regMsg');
+
+            if(pass.length < 6) {
+                msg.className = "msg error";
+                msg.innerText = "كلمة المرور يجب أن تكون 6 أحرف أو أرقام على الأقل لضمان الأمان.";
+                return;
+            }
+
+            // حفظ بيانات المستخدم في التخزين المحلي للمتصفح (localStorage)
+            localStorage.setItem('abualez_user_name', name);
+            localStorage.setItem('abualez_user_email', email);
+            localStorage.setItem('abualez_user_pass', pass);
+
+            msg.className = "msg success";
+            msg.innerText = "تم إنشاء الحساب بنجاح وتفعيل الأمان! جاري تحويلك للوحة التحكم...";
+            
+            setTimeout(() => {
+                window.location.href = "dashboard.html";
+            }, 1500);
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const userInput = document.getElementById('loginUser').value;
+            const passInput = document.getElementById('loginPass').value;
+            const msg = document.getElementById('loginMsg');
+
+            const savedEmail = localStorage.getItem('abualez_user_email');
+            const savedName = localStorage.getItem('abualez_user_name');
+            const savedPass = localStorage.getItem('abualez_user_pass');
+
+            // حساب تجريبي افتراضي في حال لم يسجل المستخدم بعد
+            if((userInput === "admin" || userInput === (savedEmail || savedName)) && (passInput === (savedPass || "123456"))) {
+                localStorage.setItem('abualez_logged', 'true');
+                msg.className = "msg success";
+                msg.innerText = "تم تسجيل الدخول بنجاح! جاري فتح لوحة التحكم...";
+                setTimeout(() => {
+                    window.location.href = "dashboard.html";
+                }, 1000);
+            } else {
+                msg.className = "msg error";
+                msg.innerText = "خطأ في بيانات الدخول أو أن الحساب غير مسجل. جرب إنشاء حساب جديد.";
+            }
+        }
+    </script>
+</body>
+</html>
