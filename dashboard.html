@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم ومشاركة الروابط | إدارة وتطوير أبو العز العمري</title>
+    <style>
+        :root {
+            --bg-color: #05070b;
+            --card-bg: #0f172a;
+            --card-border: #1e293b;
+            --accent-color: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --danger-color: #ef4444;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        header {
+            background: rgba(15, 23, 42, 0.95);
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--card-border);
+        }
+        .logo {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        .user-info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .btn-logout {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger-color);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-logout:hover {
+            background: var(--danger-color);
+            color: white;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+        .welcome-box {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            border: 1px solid var(--card-border);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+        }
+        .welcome-box h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+        .share-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .share-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        .share-card textarea {
+            width: 100%;
+            height: 100px;
+            background: #020617;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            color: var(--text-main);
+            padding: 12px;
+            font-size: 1rem;
+            outline: none;
+            resize: none;
+            margin-bottom: 15px;
+        }
+        .share-card textarea:focus {
+            border-color: var(--accent-color);
+        }
+        .btn-share {
+            background: var(--accent-color);
+            color: #05070b;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-share:hover {
+            background: var(--accent-hover);
+        }
+        .feed-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+        .post-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            word-break: break-all;
+        }
+        .post-author {
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        .post-content {
+            color: #cbd5e1;
+            font-size: 1.05rse;
+            line-height: 1.6;
+        }
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+            border-top: 1px solid var(--card-border);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">إدارة وتطوير أبو العز العمري - لوحة التحكم</div>
+        <div class="user-info">
+            <span id="userNameDisplay">مرحباً بك</span>
+            <button class="btn-logout" onclick="logout()">تسجيل الخروج</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="welcome-box">
+            <h1 id="greetingTitle">أهلاً بك في منصتك الخاصة</h1>
+            <p>من هنا يمكنك إدارة نشاطك، مشاركة الروابط والمشاريع مع الأعضاء، واستعراض أحدث الأنشطة البرمجية.</p>
+        </div>
+
+        <div class="share-card">
+            <h3>مشاركة رابط أو مشروع جديد</h3>
+            <textarea id="postText" placeholder="اكتب فكرة مشروعك، رابط موقعك المرفوع على جيت هب أو نتليفي هنا..."></textarea>
+            <button class="btn-share" onclick="publishPost()">نشر في لوحة المجتمع</button>
+        </div>
+
+        <div class="feed-section">
+            <h3>روابط ومنشورات المجتمع</h3>
+            <div id="postsFeed">
+                <!-- المنشورات ستظهر هنا ديناميكياً -->
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>لوحة التحكم الآمنة © 2026 - إدارة وتطوير أبو العز العمري</p>
+    </footer>
+
+    <script>
+        // التحقق من حماية الصفحة (هل المستخدم مسجل دخول؟)
+        window.onload = function() {
+            const isLogged = localStorage.getItem('abualez_logged');
+            if(isLogged !== 'true') {
+                window.location.href = "login.html";
+                return;
+            }
+
+            const name = localStorage.getItem('abualez_user_name') || "مستخدم مميز";
+            document.getElementById('userNameDisplay').innerText = name;
+            document.getElementById('greetingTitle').innerText = "أهلاً بك، " + name + "!";
+
+            loadPosts();
+        }
+
+        function logout() {
+            localStorage.removeItem('abualez_logged');
+            window.location.href = "login.html";
+        }
+
+        function publishPost() {
+            const text = document.getElementById('postText').value.trim();
+            if(!text) {
+                alert("يرجى كتابة نص أو رابط أولاً قبل النشر.");
+                return;
+            }
+
+            const name = localStorage.getItem('abualez_user_name') || "عضو المنصة";
+            const posts = JSON.parse(localStorage.getItem('abualez_posts') || "[]");
+            
+            posts.unshift({ author: name, content: text, date: new Date().toLocaleString() });
+            localStorage.setItem('abualez_posts', JSON.stringify(posts));
+
+            document.getElementById('postText').value = "";
+            loadPosts();
+        }
+
+        function loadPosts() {
+            const feed = document.getElementById('postsFeed');
+            const posts = JSON.parse(localStorage.getItem('abualez_posts') || "[]");
+
+            if(posts.length === 0) {
+                feed.innerHTML = `<div class="post-item"><div class="post-content" style="color:var(--text-muted); text-align:center;">لا توجد منشورات حتى الآن. كن أول من يشارك مشروعه!</div></div>`;
+                return;
+            }
+
+            let html = "";
+            posts.forEach(p => {
+                html += `
+                    <div class="post-item">
+                        <div class="post-author">${p.author} <span style="font-size:0.8rem; color:var(--text-muted); font-weight:normal; float:left;">${p.date}</span></div>
+                        <div class="post-content">${escapeHTML(p.content)}</div>
+                    </div>
+                `;
+            });
+            feed.innerHTML = html;
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+    </script>
+</body>
+</html>
