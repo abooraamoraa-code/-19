@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>من نحن | إدارة وتطوير أبو العز العمري</title>
+    <style>
+        :root {
+            --bg-color: #05070b;
+            --card-bg: #0f172a;
+            --card-border: #1e293b;
+            --accent-color: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        header {
+            background: rgba(15, 23, 42, 0.95);
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--card-border);
+        }
+        .logo {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        nav {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: var(--accent-color);
+        }
+        .container {
+            max-width: 900px;
+            margin: 80px auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+        .about-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        h1 {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 25px;
+            font-weight: 800;
+        }
+        p {
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+        }
+        .features-list {
+            list-style: none;
+            margin-top: 30px;
+        }
+        .features-list li {
+            margin-bottom: 15px;
+            position: relative;
+            padding-right: 30px;
+            color: #cbd5e1;
+            font-size: 1.1rem;
+        }
+        .features-list li::before {
+            content: "⭐";
+            position: absolute;
+            right: 0;
+            color: var(--accent-color);
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #64748b;
+            border-top: 1px solid var(--card-border);
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">إدارة وتطوير أبو العز العمري</a>
+        <nav>
+            <a href="index.html">الرئيسية</a>
+            <a href="about.html" style="color: var(--accent-color);">من نحن</a>
+            <a href="contact.html">اتصل بنا</a>
+            <a href="login.html">تسجيل الدخول</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="about-card">
+            <h1>من نحن - إدارة وتطوير أبو العز العمري</h1>
+            <p>نحن مؤسسة برمجية رائدة تهدف إلى بناء مستقبل الويب وتطوير تطبيقات ومنصات رقمية بمعايير عالمية تنافس كبرى الشركات التقنية.</p>
+            <p>تأسست المنصة برؤية طموحة لتقديم حلول برمجية مبتكرة، سهلة الاستخدام، ومتاحة للجميع بأعلى درجات الأمان والكفاءة والسرعة العالية.</p>
+            
+            <ul class="features-list">
+                <li>الاحترافية العالية في تصميم وبرمجة المواقع ومنصات الويب.</li>
+                <li>توفير أنظمة أمان متقدمة وحماية كاملة لبيانات المستخدمين.</li>
+                <li>حلول دفع إلكتروني عالمية وموثوقة لضمان تجربة تسوق سلسة.</li>
+                <li>دعم فني مستمر وتحديثات دورية لمواكبة أحدث تقنيات العصر.</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © 2026 - إدارة وتطوير أبو العز العمري</p>
+    </footer>
+
+</body>
+</html>
